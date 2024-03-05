@@ -75,4 +75,16 @@ public class PunchButtons3D : MonoBehaviour
         isToggledScrew = !isToggledScrew;
         launchManager.ToggleScrewPunch();
     }
+    public bool[] GetActions()
+    {
+        bool[] returnValue = new bool[2];
+
+        returnValue[0] = isToggledDrill;
+        returnValue[1] = isToggledScrew;
+
+        Debug.Log(isToggledDrill);
+        Debug.Log(isToggledScrew);
+
+        return returnValue;
+    }
 }

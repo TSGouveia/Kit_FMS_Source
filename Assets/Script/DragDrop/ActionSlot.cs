@@ -21,49 +21,52 @@ public class ActionSlot : MonoBehaviour, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 0)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            GameObject dropped = eventData.pointerDrag;
-            DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
-            draggableItem.parentAfterDrag = transform;
-            if(transform != draggableItem.lastParent && draggableItem.lastParent.parent != transform.parent) 
+            if (transform.childCount == 0)
             {
-                if(dropped.transform.GetChild(0).GetComponent<TMP_Text>().text == "Color 1")
+                GameObject dropped = eventData.pointerDrag;
+                DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
+                draggableItem.parentAfterDrag = transform;
+                if (transform != draggableItem.lastParent && draggableItem.lastParent.parent != transform.parent)
                 {
-                    leftIsOnDraggables = false;
+                    if (dropped.transform.GetChild(0).GetComponent<TMP_Text>().text == "Color 1")
+                    {
+                        leftIsOnDraggables = false;
+                    }
+
+                    slotsScript.AddSlot();
                 }
-
-                slotsScript.AddSlot();
-            }
-        }
-        else
-        {
-            GameObject dropped = eventData.pointerDrag;
-            DraggableItem newDraggableItem = dropped.GetComponent<DraggableItem>();
-            Transform newParent = newDraggableItem.lastParent;
-
-            Transform oldGO = transform.GetChild(0);
-
-            if (transform != newDraggableItem.lastParent && newDraggableItem.lastParent.parent != transform.parent)
-            {
-                if (dropped.transform.GetChild(0).GetComponent<TMP_Text>().text == "Color 1")
-                {
-                    leftIsOnDraggables = false;
-                }
-            }
-
-            if (newParent.parent != actions)
-            {
-                //It came from the draggables
-                RemoveFromSlot(oldGO, newParent);
             }
             else
             {
-                //It came from slot
-                oldGO.SetParent(newParent);
-            }
+                GameObject dropped = eventData.pointerDrag;
+                DraggableItem newDraggableItem = dropped.GetComponent<DraggableItem>();
+                Transform newParent = newDraggableItem.lastParent;
 
-            newDraggableItem.parentAfterDrag = transform;
+                Transform oldGO = transform.GetChild(0);
+
+                if (transform != newDraggableItem.lastParent && newDraggableItem.lastParent.parent != transform.parent)
+                {
+                    if (dropped.transform.GetChild(0).GetComponent<TMP_Text>().text == "Color 1")
+                    {
+                        leftIsOnDraggables = false;
+                    }
+                }
+
+                if (newParent.parent != actions)
+                {
+                    //It came from the draggables
+                    RemoveFromSlot(oldGO, newParent);
+                }
+                else
+                {
+                    //It came from slot
+                    oldGO.SetParent(newParent);
+                }
+
+                newDraggableItem.parentAfterDrag = transform;
+            }
         }
     }
     IEnumerator ReturnColorToDraggable(Transform oldGO, Transform newParent,int childIndex)

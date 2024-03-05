@@ -32,7 +32,7 @@ public class InteractWithDraggable : MonoBehaviour, IPointerEnterHandler, IPoint
 
     private void Update()
     {
-        if (pointerIsOver)
+        if (pointerIsOver && transform.parent != draggableParent)
         {
             if (Input.GetMouseButtonDown(1) && color)
             {

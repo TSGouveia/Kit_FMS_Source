@@ -28,55 +28,67 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup canvasGroup;
 
     private ChooseColor chooseColor;
+
+    private PunchButtons3D punchButtons;
+
     private void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         chooseColor = FindObjectOfType<ChooseColor>();
+        punchButtons = FindObjectOfType<PunchButtons3D>();
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (transform.parent == firstParent)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            spawnOnEndDrag = true;
+            if (transform.parent == firstParent)
+            {
+                spawnOnEndDrag = true;
+            }
+            lastParent = transform.parent;
+
+            childIndex = transform.GetSiblingIndex();
+            parentAfterDrag = transform.parent;
+
+            transform.SetParent(transform.root);
+            transform.SetAsLastSibling();
+            canvasGroup.blocksRaycasts = false;
         }
-        lastParent = transform.parent;
-
-        childIndex = transform.GetSiblingIndex();
-        parentAfterDrag = transform.parent;
-        
-        transform.SetParent(transform.root);
-        transform.SetAsLastSibling();
-        canvasGroup.blocksRaycasts = false;
-
-
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            transform.position = Input.mousePosition;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (parentAfterDrag != firstParent && spawnOnEndDrag)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            spawnOnEndDrag = false;
-            if (!unique)
+            if (parentAfterDrag != firstParent && spawnOnEndDrag)
             {
-                GameObject newGO = Instantiate(gameObject, firstParent);
+                spawnOnEndDrag = false;
+                if (!unique)
+                {
+                    GameObject newGO = Instantiate(gameObject, firstParent);
 
-                newGO.transform.SetSiblingIndex(childIndex);
-                CanvasGroup canvasGroupNewGO = newGO.GetComponent<CanvasGroup>();
-                canvasGroupNewGO.blocksRaycasts = true;
+                    newGO.transform.SetSiblingIndex(childIndex);
+                    CanvasGroup canvasGroupNewGO = newGO.GetComponent<CanvasGroup>();
+                    canvasGroupNewGO.blocksRaycasts = true;
+                }
+                else
+                {
+                    chooseColor.StartChoosingColor(transform.GetChild(0).GetComponent<TMP_Text>().text);
+                }
             }
-            else
-            {
-                chooseColor.StartChoosingColor(transform.GetChild(0).GetComponent<TMP_Text>().text);
-            }
+
+            transform.SetParent(parentAfterDrag);
+            transform.SetSiblingIndex(childIndex);
+            canvasGroup.blocksRaycasts = true;
         }
-
-        transform.SetParent(parentAfterDrag);
-        transform.SetSiblingIndex(childIndex);
-        canvasGroup.blocksRaycasts = true;
     }
 }

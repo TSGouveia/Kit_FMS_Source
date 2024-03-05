@@ -99,6 +99,8 @@ public class SetupLaunchManager : MonoBehaviour
     private string priority = string.Empty;
 
     private PortCorrecting portCorrecting;
+
+    private DisableUnusedButtons unusedButtons;
     private void Start()
     {
         cameraMovement = FindObjectOfType<CameraMovement>();
@@ -111,6 +113,7 @@ public class SetupLaunchManager : MonoBehaviour
         portCorrecting = FindObjectOfType<PortCorrecting>();
 
         initialBoxRotation = box.eulerAngles;
+        unusedButtons = FindObjectOfType<DisableUnusedButtons>();
 
     }
 
@@ -259,6 +262,8 @@ public class SetupLaunchManager : MonoBehaviour
         }
 
         cameraMovement.cameraMovementEnabled = false;
+
+        unusedButtons.HideUnusedButtons();
     }
     public void ChangePieceLeft(int mat)
     {

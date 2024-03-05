@@ -8,16 +8,16 @@ using Newtonsoft.Json.Linq;
 
 public class ConfigUpdate : MonoBehaviour
 {
-    private const string yellow1 = "Skill_Yellow_1";
-    private const string yellow2 = "Skill_Yellow_2";
-    private const string green1 = "Skill_Green_1";
-    private const string green2 = "Skill_Green_2";
-    private const string red1 = "Skill_Red_1";
-    private const string red2 = "Skill_Red_2";
-    private const string blue1 = "Skill_Blue_1";
-    private const string blue2 = "Skill_Blue_2";
-    private const string skillDrill = "Skill_Drill";
-    private const string skillScrew = "Skill_Screw";
+    private const string YELLOW1 = "Skill_Yellow_1";
+    private const string YELLOW2 = "Skill_Yellow_2";
+    private const string GREEN1 = "Skill_Green_1";
+    private const string GREEN2 = "Skill_Green_2";
+    private const string RED1 = "Skill_Red_1";
+    private const string RED2 = "Skill_Red_2";
+    private const string BLUE1 = "Skill_Blue_1";
+    private const string BLUE2 = "Skill_Blue_2";
+    private const string SKILLDRILL = "Skill_Drill";
+    private const string SKILLSCREW = "Skill_Screw";
 
     private bool hasOperator = false;
     private bool hasRobotLeft = false;
@@ -28,7 +28,7 @@ public class ConfigUpdate : MonoBehaviour
 
     private bool[] robotColors;
     private bool[] humanColors;
-    private bool[] actions;
+    private bool[] actions = { false, false };
 
     private CurrentStatus status;
     private SetupLaunchManager manager;
@@ -86,11 +86,11 @@ public class ConfigUpdate : MonoBehaviour
 
             if (actions[1])
             {
-                torre.Add(skillScrew);
+                torre.Add(SKILLSCREW);
             }
             if (actions[0])
             {
-                torre.Add(skillDrill);
+                torre.Add(SKILLDRILL);
             }
 
             total["Station"] = torre;
@@ -102,23 +102,23 @@ public class ConfigUpdate : MonoBehaviour
 
             if (humanColors[0])
             {
-                operador.Add(red1);
-                operador.Add(red2);
+                operador.Add(RED1);
+                operador.Add(RED2);
             }
             if (humanColors[1])
             {
-                operador.Add(green1);
-                operador.Add(green2);
+                operador.Add(GREEN1);
+                operador.Add(GREEN2);
             }
             if (humanColors[3])
             {
-                operador.Add(yellow1);
-                operador.Add(yellow2);
+                operador.Add(YELLOW1);
+                operador.Add(YELLOW2);
             }
             if (humanColors[2])
             {
-                operador.Add(blue1);
-                operador.Add(blue2);
+                operador.Add(BLUE1);
+                operador.Add(BLUE2);
             }
             total["Operator1"] = operador;
         }
@@ -129,23 +129,23 @@ public class ConfigUpdate : MonoBehaviour
             JArray robot = new JArray();
             if (robotColors[0])
             {
-                robot.Add(red1);
-                robot.Add(red2);
+                robot.Add(RED1);
+                robot.Add(RED2);
             }
             if (robotColors[1])
             {
-                robot.Add(green1);
-                robot.Add(green2);
+                robot.Add(GREEN1);
+                robot.Add(GREEN2);
             }
             if (robotColors[3])
             {
-                robot.Add(yellow1);
-                robot.Add(yellow2);
+                robot.Add(YELLOW1);
+                robot.Add(YELLOW2);
             }
             if (robotColors[2])
             {
-                robot.Add(blue1);
-                robot.Add(blue2);
+                robot.Add(BLUE1);
+                robot.Add(BLUE2);
             }
             if (hasRobotLeft)
             {
