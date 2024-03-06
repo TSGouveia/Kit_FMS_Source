@@ -376,6 +376,10 @@ public class SetupLaunchManager : MonoBehaviour
                 {
                     icons[0].sprite = humanIcon;
                 }
+                else
+                {
+                    icons[0].sprite = null;
+                }
 
                 if (robotIsOnRight)
                 {
@@ -384,6 +388,10 @@ public class SetupLaunchManager : MonoBehaviour
                 else if (humanIsOnRight)
                 {
                     icons[1].sprite = humanIcon;
+                }
+                else
+                {
+                    icons[1].sprite = null;
                 }
             }
             launchConveyor.SetActive(false);
